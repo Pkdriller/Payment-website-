@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello, World!</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+      <h1 class="title">Hello World! </h1>
+      <p id="currentTime"></p>
+      <script src="script.js"></script>
+  </body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pkdriller Payment Hub</title>
+  <!-- Holo Cyber Styles -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cyber-pink: #ff00e6;
+      --cyber-cyan: #00fff7;
+      --cyber-blue: #3a8fff;
+      --cyber-yellow: #ffe600;
+      --cyber-bg: #0b1023;
+      --holo-glow: 0 0 12px var(--cyber-cyan), 0 0 24px var(--cyber-pink);
+      --holo-shadow: 0 0 6px #00fff7, 0 0 10px #ff00e6;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #0b1023 60%, #161a3d 100%);
+      min-height: 100vh;
+      font-family: 'Orbitron', Arial, sans-serif;
+      color: #fff;
+      overflow-x: hidden;
+    }
+    .live-bg {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .cyber-btn {
+      background: linear-gradient(90deg, var(--cyber-cyan) 0%, var(--cyber-pink) 50%, var(--cyber-blue) 100%);
+      color: #fff;
+      border: none;
+      border-radius: 2em;
+      padding: 1em 2.5em;
+      font-size: 1.2em;
+      font-family: inherit;
+      cursor: pointer;
+      box-shadow: var(--holo-shadow);
+      position: relative;
+      margin: 1em 0.5em;
+      transition: transform 0.1s;
+      outline: 2px solid #fff6;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    .cyber-btn:hover {
+      transform: scale(1.08) rotate(-1deg);
+      box-shadow: 0 0 24px var(--cyber-yellow), var(--holo-shadow);
+      background: linear-gradient(90deg, var(--cyber-yellow) 0%, var(--cyber-pink) 100%);
+    }
+    .cyber-box {
+      background: rgba(20,34,68,0.85);
+      border: 2px solid var(--cyber-cyan);
+      border-radius: 1.5em;
+      padding: 2em;
+      margin: 2.5em auto;
+      max-width: 600px;
+      box-shadow: var(--holo-glow);
+      position: relative;
+      z-index: 1;
+    }
+    .section-title {
+      font-size: 2em;
+      color: var(--cyber-yellow);
+      text-shadow: 0 0 14px var(--cyber-blue), 0 0 10px #fff3;
+      margin-bottom: 0.7em;
+      letter-spacing: 3px;
+    }
+    .copy-btn {
+      background: var(--cyber-blue);
+      padding: 0.3em 1.2em;
+      border-radius: 0.9em;
+      font-size: 1em;
+      margin-left: 0.7em;
+      border: none;
+      color: #fff;
+      box-shadow: 0 0 8px var(--cyber-cyan);
+      cursor: pointer;
+      transition: background 0.15s;
+      font-family: inherit;
+    }
+    .copy-btn:hover {
+      background: var(--cyber-yellow);
+      color: #000;
+    }
+    .screenshot-img {
+      width: 180px; height: 120px;
+      border-radius: 1em;
+      margin: 1em 0.8em 0.3em 0;
+      border: 2px solid var(--cyber-pink);
+      object-fit: cover;
+      box-shadow: 0 0 18px var(--cyber-cyan);
+    }
+    .send-whatsapp-btn {
+      background: #25d366;
+      color: #fff;
+      border: none;
+      border-radius: 2em;
+      font-size: 1.1em;
+      padding: 1em 2em;
+      margin: 1em 0;
+      font-family: inherit;
+      box-shadow: 0 0 10px #25d366;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6em;
+      text-decoration: none;
+    }
+    .send-whatsapp-btn:hover {
+      background: #128c7e;
+      box-shadow: 0 0 16px #25d366;
+    }
+    .made-by {
+      text-align: center;
+      color: var(--cyber-pink);
+      font-size: 1.1em;
+      margin-top: 2em;
+      letter-spacing: 2px;
+      text-shadow: 0 0 8px var(--cyber-cyan);
+    }
+    .random-verse {
+      background: rgba(0,0,0,0.7);
+      border-radius: 1em;
+      padding: 1em;
+      color: var(--cyber-yellow);
+      margin-top: 2em;
+      font-size: 1.15em;
+      text-align: center;
+      box-shadow: 0 0 12px var(--cyber-blue);
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .music-control {
+      position: fixed;
+      top: 2.1em;
+      right: 3.2em;
+      z-index: 1050;
+      background: #1b1f2e;
+      border: 2px solid var(--cyber-cyan);
+      border-radius: 2em;
+      box-shadow: 0 0 10px var(--cyber-blue);
+      padding: 0.4em 1.2em;
+      color: #fff;
+      font-family: inherit;
+      cursor: pointer;
+    }
+    .music-control:hover {
+      background: var(--cyber-pink);
+      color: #000;
+      border: 2px solid var(--cyber-yellow);
+    }
+    /* Loader Styles */
+    #loader {
+      position: fixed;
+      z-index: 9999;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: linear-gradient(120deg, #000 80%, #3a8fff 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #0ff;
+      font-family: 'Orbitron', Arial, sans-serif;
+      letter-spacing: 3px;
+      font-size: 2em;
+      animation: loaderBg 2s infinite alternate;
+    }
+    @keyframes loaderBg {
+      0% {background: linear-gradient(120deg, #000 80%, #3a8fff 100%);}
+      100% {background: linear-gradient(120deg, #18197a 20%, #ff00e6 100%);}
+    }
+    .cyber-init {
+      font-size: 1.25em;
+      color: var(--cyber-yellow);
+      text-shadow: 0 0 20px var(--cyber-cyan);
+      margin: 1em 0 0.5em 0;
+      letter-spacing: 4px;
+    }
+    .terminal {
+      background: rgba(22,34,68,0.9);
+      border: 2px solid var(--cyber-cyan);
+      width: 340px;
+      padding: 1em 2em;
+      border-radius: 1.4em;
+      font-family: 'Courier New', monospace;
+      font-size: 1em;
+      color: #00fff7;
+      margin: 1em 0;
+      box-shadow: 0 0 20px #00fff7;
+      text-align: left;
+      min-height: 90px;
+    }
+    .avatar-loader {
+      margin-top: 2em;
+      width: 128px;
+      height: 128px;
+      border-radius: 50%;
+      border: 10px solid #222;
+      position: relative;
+      box-shadow: 0 0 32px 8px var(--cyber-cyan);
+      animation: avatarSpin 1.1s linear infinite;
+      overflow: hidden;
+    }
+    @keyframes avatarSpin {
+      100% { transform: rotate(360deg);}
+    }
+    .avatar-loader img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--cyber-pink);
+    }
+    @media (max-width: 700px) {
+      .cyber-box {padding: 1em; max-width: 96vw;}
+      .section-title {font-size: 1.3em;}
+      .screenshot-img {width: 95px; height: 65px;}
+      .music-control {top: 1.1em; right: 1em;}
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated Live Cybernetic Background -->
+  <canvas class="live-bg" id="cyber-bg"></canvas>
+  <!-- Loader Overlay -->
+  <div id="loader">
+    <div class="cyber-init">SYSTEM INITIALIZING...</div>
+    <div class="terminal" id="terminal"></div>
+    <div class="avatar-loader" id="avatar-spin">
+      <img src="https://avatars.githubusercontent.com/u/3369400?v=4" alt="Pkdriller">
+    </div>
+    <div style="font-size:1.1em;color:#fff9;margin-top:1em;">LOADING PROFILE</div>
+  </div>
+  <!-- Music Controls -->
+  <button class="music-control" id="music-toggle">🔊 Mute</button>
+  <!-- Main Content -->
+  <main id="content" style="opacity:0; transition: opacity 1.3s;">
+    <div class="cyber-box" style="margin-top:4.5em">
+      <div style="text-align:center;">
+        <img src="https://avatars.githubusercontent.com/u/3369400?v=4" alt="Pkdriller" style="width:110px;height:110px;border-radius:50%;border:5px solid var(--cyber-cyan);box-shadow:0 0 18px var(--cyber-pink);margin-bottom:1em;">
+      </div>
+      <div class="section-title">Welcome to Pkdriller Payment Hub</div>
+      <p style="font-size:1.15em;color:var(--cyber-yellow);text-shadow:0 0 10px var(--cyber-blue);text-align:center;">
+      "Experience the Future of Payments in a Secure, Cybernetic World."
+      </p>
+    </div>
+
+    <!-- Eversend Payment -->
+    <div class="cyber-box">
+      <div class="section-title">Eversend Payment Method</div>
+      <div style="color:var(--cyber-cyan); font-size:1.11em; margin-bottom:0.4em;">
+        Send your payment securely via Eversend.<br>
+        <b>Account Name:</b> Pkdriller Payments<br>
+        <b>Eversend Tag:</b> <span id="eversend-tag">PKDRILLER-001</span>
+        <button class="copy-btn" onclick="copyText('eversend-tag')">Copy</button>
+      </div>
+      <div>
+        <img src="https://i.imgur.com/iJbQfPX.png" alt="Eversend Payment Screenshot" class="screenshot-img">
+        <div style="font-size:0.99em;color:var(--cyber-yellow)">
+          "Fast, borderless &amp; secure – Eversend, your all-in-one payment solution."
+        </div>
+      </div>
+    </div>
+
+    <!-- Lipa na MPESA (Paybill) -->
+    <div class="cyber-box">
+      <div class="section-title">Lipa na M-PESA (Paybill)</div>
+      <div style="color:var(--cyber-cyan); font-size:1.11em; margin-bottom:0.4em;">
+        <b>Paybill:</b> <span id="mpesa-paybill">547890</span>
+        <button class="copy-btn" onclick="copyText('mpesa-paybill')">Copy</button><br>
+        <b>Account Number:</b> <span id="mpesa-account">PKDRILLER</span>
+        <button class="copy-btn" onclick="copyText('mpesa-account')">Copy</button>
+      </div>
+      <div>
+        <img src="https://i.imgur.com/4H4tx9i.png" alt="Mpesa Paybill Screenshot" class="screenshot-img">
+        <div style="font-size:0.99em;color:var(--cyber-yellow)">
+          "Pay with confidence – trusted, instant, always available."
+        </div>
+      </div>
+    </div>
+
+    <!-- Send Money to MPESA -->
+    <div class="cyber-box">
+      <div class="section-title">Send Money to M-PESA</div>
+      <div style="color:var(--cyber-cyan); font-size:1.11em; margin-bottom:0.4em;">
+        <b>M-PESA Number:</b> <span id="mpesa-number">+254794146821</span>
+        <button class="copy-btn" onclick="copyText('mpesa-number')">Copy</button>
+      </div>
+      <div>
+        <img src="https://i.imgur.com/4H4tx9i.png" alt="Mpesa Payment Screenshot" class="screenshot-img">
+        <div style="font-size:0.99em;color:var(--cyber-yellow)">
+          "Simple. Reliable. Every time. Your payments, your way."
+        </div>
+      </div>
+    </div>
+
+    <!-- WhatsApp Screenshot Send -->
+    <div class="cyber-box" style="text-align:center;">
+      <div class="section-title">Send Payment Screenshot</div>
+      <p style="color:var(--cyber-cyan);font-size:1.08em;">
+        Kindly send your payment screenshot to us on WhatsApp for instant verification.
+      </p>
+      <a class="send-whatsapp-btn" href="https://wa.me/254794146821?text=Hello%20Pkdriller%2C%20I%20have%20sent%20my%20payment%20screenshot%20for%20verification." target="_blank">
+        <svg width="23" height="23" viewBox="0 0 32 32"><path fill="#fff" d="M16 3C9.373 3 4 8.373 4 15c0 2.638.858 5.062 2.299 7.074L4 29l7.188-2.254A12.95 12.95 0 0016 27c6.627 0 12-5.373 12-12S22.627 3 16 3zm0 22c-1.916 0-3.68-.497-5.202-1.364l-.37-.21-4.255 1.336 1.322-4.17-.24-.374A10.952 10.952 0 015.001 15C5.001 9.477 9.477 5 16 5s10.999 4.477 10.999 10c0 6.523-4.476 11-10.999 11zm5.011-7.145c-.273-.137-1.616-.797-1.866-.888-.25-.089-.43-.137-.612.138-.182.273-.703.888-.862 1.071-.159.183-.318.205-.591.069-.273-.137-1.153-.424-2.198-1.348-.813-.725-1.363-1.62-1.523-1.894-.159-.273-.017-.421.12-.558.124-.124.273-.318.409-.477.137-.159.182-.273.273-.456.092-.182.046-.342-.023-.479-.068-.138-.612-1.482-.84-2.029-.222-.534-.448-.461-.612-.47-.158-.009-.341-.011-.525-.011a1.012 1.012 0 00-.738.341c-.25.273-.954.933-.954 2.272 0 1.338.977 2.633 1.113 2.816.137.182 1.92 2.937 4.654 4.006.651.224 1.157.357 1.552.457.652.166 1.246.143 1.713.087.523-.062 1.616-.661 1.845-1.301.229-.64.229-1.188.159-1.301-.068-.114-.25-.182-.523-.319z"/></svg>
+        Send on WhatsApp
+      </a>
+      <div style="font-size:0.95em;color:var(--cyber-yellow);margin-top:1em;">
+        "Seamless verification, trusted service."
+      </div>
+    </div>
+
+    <!-- Random Verses Section -->
+    <div class="random-verse" id="random-verse">
+      <!-- JS inserts verse here -->
+    </div>
+
+    <!-- Made By -->
+    <div class="made-by">
+      Made With <span style="color:var(--cyber-yellow);">❤</span> by Pkdriller
+    </div>
+  </main>
+  <!-- Music (autoplay, loop, highs & lows by Prinz) -->
+  <audio id="bg-music" src="https://dl.dropboxusercontent.com/scl/fi/ib5wq0j8z3e1w6v8ipuln/prinz-highs-and-lows.mp3?rlkey=zs1o3jxh2k2jxa5b1z7v8mcdq&raw=1" autoplay loop></audio>
+  <script>
+    // Loader Cybernetic Terminal Animation
+    const terminalLines = [
+      '[OK] Initializing Payment Gateway...',
+      '[OK] Establishing Secure Connection...',
+      '[OK] Loading Holographic Interface...',
+      '[OK] Authenticating User...',
+      '[OK] Decrypting Payment Methods...',
+      '[OK] Fetching Live Data...',
+      '[OK] Rendering PKDRILLER Profile...',
+      '[OK] Activating Cybernetic Systems...',
+      '[OK] System Ready!'
+    ];
+    let termIndex = 0;
+    const terminal = document.getElementById('terminal');
+    function typeLines() {
+      if (termIndex < terminalLines.length) {
+        terminal.innerHTML += terminalLines[termIndex] + '<br>';
+        termIndex++;
+        setTimeout(typeLines, 400 + Math.random()*200);
+      } else {
+        setTimeout(hideLoader, 1100);
+      }
+    }
+    function hideLoader() {
+      document.getElementById('loader').style.display = 'none';
+      document.getElementById('content').style.opacity = 1;
+    }
+    setTimeout(typeLines, 750);
+
+    // Copy to Clipboard
+    function copyText(id) {
+      const el = document.getElementById(id);
+      const txt = el.innerText || el.textContent;
+      navigator.clipboard.writeText(txt);
+      el.style.background = "#25d366";
+      setTimeout(()=>{el.style.background="";}, 320);
+    }
+
+    // Music Controls
+    const music = document.getElementById('bg-music');
+    const musicToggle = document.getElementById('music-toggle');
+    let musicMuted = false;
+    music.volume = 0.7;
+    musicToggle.onclick = function() {
+      musicMuted = !musicMuted;
+      music.muted = musicMuted;
+      musicToggle.innerText = musicMuted ? "🔇 Unmute" : "🔊 Mute";
+    };
+
+    // Random Verses
+    const verses = [
+      '"Commit to the LORD whatever you do, and he will establish your plans." - Proverbs 16:3',
+      '"For where your treasure is, there your heart will be also." - Matthew 6:21',
+      '"Plans fail for lack of counsel, but with many advisers they succeed." - Proverbs 15:22',
+      '"Good business brings favor; honest trade brings respect."',
+      '"The best investment is in the tools of one\'s own trade." - Benjamin Franklin',
+      '"Be diligent in business, fervent in spirit." - Romans 12:11',
+      '"Wealth gained hastily will dwindle, but whoever gathers little by little will increase it." - Proverbs 13:11',
+      '"Success is not in what you have, but who you are." - Bo Bennett',
+      '"The blessing of the LORD brings wealth, without painful toil for it." - Proverbs 10:22',
+      '"Boldness in business brings rewards. Stay brave and true!"'
+    ];
+    function showRandomVerse() {
+      const v = verses[Math.floor(Math.random()*verses.length)];
+      document.getElementById('random-verse').innerText = v;
+    }
+    showRandomVerse();
+
+    // Animated Holo Cyber Background (random moving lines and dots)
+    const canvas = document.getElementById('cyber-bg');
+    const ctx = canvas.getContext('2d');
+    let w = window.innerWidth, h = window.innerHeight;
+    function resize() {
+      w = window.innerWidth; h = window.innerHeight;
+      canvas.width = w; canvas.height = h;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+    // Draw cyber lines and dots
+    let dots = [];
+    for(let i=0;i<30;i++){
+      dots.push({x:Math.random()*w, y:Math.random()*h, r:1+Math.random()*2, dx: (Math.random()-0.5)*0.9, dy: (Math.random()-0.5)*0.9, c:Math.random()>0.5? 'cyan':'magenta'});
+    }
+    function drawBg() {
+      ctx.clearRect(0,0,w,h);
+      // Dots
+      for(const d of dots){
+        ctx.beginPath();
+        ctx.arc(d.x,d.y,d.r,0,2*Math.PI);
+        ctx.fillStyle = d.c==='cyan'? '#00fff7cc':'#ff00e6bb';
+        ctx.shadowColor = d.c==='cyan'? '#00fff7':'#ff00e6';
+        ctx.shadowBlur = 12;
+        ctx.fill();
+        d.x+=d.dx; d.y+=d.dy;
+        if(d.x<0||d.x>w) d.dx*=-1;
+        if(d.y<0||d.y>h) d.dy*=-1;
+      }
+      // Cyber lines
+      for(let i=0;i<10;i++){
+        ctx.beginPath();
+        const y = h/10*i + Math.sin(Date.now()/900+i)*22;
+        ctx.moveTo(0, y);
+        ctx.lineTo(w, y+Math.cos(i+Date.now()/1300)*12);
+        ctx.strokeStyle = i%2==0? '#00fff733':'#ff00e644';
+        ctx.lineWidth = 2+Math.abs(Math.sin(Date.now()/800+i))*2;
+        ctx.shadowColor = '#00fff7';
+        ctx.shadowBlur = 18;
+        ctx.stroke();
+      }
+      ctx.shadowBlur = 0;
+      requestAnimationFrame(drawBg);
+    }
+    drawBg();
+  </script>
+</body>
+</html>
